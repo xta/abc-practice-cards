@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Rex Feng">
+    <title>ABC Practice</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: serif;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            font-size: 75vh;
+            cursor: pointer;
+            background-color: #fef9c3;
+            padding: 0rem 8rem;
+            border-radius: 100px;
+        }
+
+        .caps-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 768px) {
+            main {
+                font-size: 90vw;
+                padding: 1rem 3rem;
+                border-radius: 40px;
+            }
+
+            .caps-toggle {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main></main>
+    </div>
+    <button class="caps-toggle" onclick="toggleCaps()">caps off</button>
+
+    <script>
+        // cap states: ['off', 'on', 'mixed']
+        let caps = 'off'
+
+        function getRandomLetter() {
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz'
+            const randomIndex = Math.floor(Math.random() * alphabet.length)
+            let letter = alphabet[randomIndex];
+
+            const lower = letter.toLowerCase()
+            const upper = letter.toUpperCase()
+
+            if (caps === 'off') {
+                letter = lower
+            } else if (caps === 'on') {
+                letter = upper
+            } else {
+                const choices = [lower, upper]
+                const index = Math.floor(Math.random() * choices.length)
+                const random = choices[index];
+                letter = random
+            }
+            return letter;
+        }
+
+        function update() {
+            const main = document.querySelector('main')
+
+            const current = main.innerText
+            let newChar = getRandomLetter()
+            while (current === newChar) {
+                newChar = getRandomLetter()
+            }
+            main.innerText = newChar
+        }
+
+        function setupHandler() {
+            const main = document.querySelector('main')
+            main.addEventListener('click', update)
+        }
+
+
+        function updateButtonLabel() {
+            const button = document.querySelector('button')
+            if (caps === 'off') {
+                button.innerText = 'caps off'
+            } else if (caps === 'on') {
+                button.innerText = 'CAPS ON'
+            } else {
+                button.innerText = 'CapS RaNdom'
+            }
+        }
+
+        function toggleCaps() {
+            if (caps === 'off') {
+                caps = 'on'
+            } else if (caps === 'on') {
+                caps = 'mixed'
+            } else {
+                caps = 'off'
+            }
+
+            updateCharacterCaps()
+            updateButtonLabel()
+        }
+
+        function updateCharacterCaps() {
+            const main = document.querySelector('main')
+            const current = main.innerText
+            if (caps === 'off') {
+                main.innerText = current.toLowerCase()
+            } else if (caps === 'on') {
+                main.innerText = current.toUpperCase()
+            }
+        }
+
+        update()
+        setupHandler()
+    </script>
+</body>
+
+</html>
