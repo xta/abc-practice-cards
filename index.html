@@ -21,12 +21,13 @@
             align-items: center;
         }
 
-        main {
+        button.main {
             font-size: 75vh;
             cursor: pointer;
             background-color: #fef9c3;
             padding: 0rem 8rem;
             border-radius: 100px;
+            border: none;
         }
 
         .caps-toggle {
@@ -42,7 +43,7 @@
         }
 
         @media only screen and (max-width: 768px) {
-            main {
+            button.main {
                 font-size: 90vw;
                 padding: 1rem 3rem;
                 border-radius: 40px;
@@ -57,7 +58,7 @@
 
 <body>
     <div class="container">
-        <main></main>
+        <button class="main"></button>
     </div>
     <button class="caps-toggle" onclick="toggleCaps()">caps off</button>
 
@@ -87,7 +88,7 @@
         }
 
         function update() {
-            const main = document.querySelector('main')
+            const main = document.getElementsByClassName("main")[0]
 
             const current = main.innerText
             let newChar = getRandomLetter()
@@ -98,13 +99,13 @@
         }
 
         function setupHandler() {
-            const main = document.querySelector('main')
+            const main = document.getElementsByClassName("main")[0]
             main.addEventListener('click', update)
         }
 
 
         function updateButtonLabel() {
-            const button = document.querySelector('button')
+            const button = document.getElementsByClassName("caps-toggle")[0]
             if (caps === 'off') {
                 button.innerText = 'caps off'
             } else if (caps === 'on') {
@@ -128,7 +129,7 @@
         }
 
         function updateCharacterCaps() {
-            const main = document.querySelector('main')
+            const main = document.getElementsByClassName("main")[0]
             const current = main.innerText
             if (caps === 'off') {
                 main.innerText = current.toLowerCase()
